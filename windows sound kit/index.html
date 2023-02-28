@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Sounds
+    </title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="keys">
+        <div data-key="65" class="key">
+            <kbd>A</kbd>
+            <span class="sound">Background</span>
+        </div>
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">Critical Stop</span>
+        </div>
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">Ding</span>
+        </div>
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">Error</span>
+        </div>
+        <div data-key="71" class="key">
+            <kbd>G</kbd>
+            <span class="sound">Foreground</span>
+        </div>
+        <div data-key="72" class="key">
+            <kbd>H</kbd>
+            <span class="sound">Remove</span>
+        </div>
+        <div data-key="74" class="key">
+            <kbd>J</kbd>
+            <span class="sound">Nudge</span>
+        </div>
+        <div data-key="75" class="key">
+            <kbd>K</kbd>
+            <span class="sound">Recycle</span>
+        </div>
+        <div data-key="76" class="key">
+            <kbd>L</kbd>
+            <span class="sound">Shutdown</span>
+        </div>
+        <div data-key="32" class="key">
+            <kbd>Space</kbd>
+            <span class="sound">Startup</span>
+        </div>
+    </div>
+    <audio data-key="65" src="sounds/Background.wav"></audio>
+    <audio data-key="83" src="sounds/Critical-stop.wav"></audio>
+    <audio data-key="68" src="sounds/Ding.wav"></audio>
+    <audio data-key="70" src="sounds/Error.wav"></audio>
+    <audio data-key="71" src="sounds/Foreground.wav"></audio>
+    <audio data-key="72" src="sounds/Hardware-remove.wav"></audio>
+    <audio data-key="74" src="sounds/Nudge.wav"></audio>
+    <audio data-key="75" src="sounds/Recycle.wav"></audio>
+    <audio data-key="76" src="sounds/Shutdown.wav"></audio>
+    <audio data-key="32" src="sounds/Startup.wav"></audio>
+
+    <script>
+        function playSound(e) {
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+            if(!audio) return;
+            audio.currentTime = 0;
+            audio.play();
+            key.classList.add('playing');
+        }
+
+        function removeTransition(e) {
+            if(e.propertyName !== 'transform') return;
+            this.classList.remove('playing');
+        }
+        const keys = document.querySelectorAll('.key');
+        keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+        window.addEventListener('keydown', playSound);
+
+   
+    </script>
+</body>
+</html>
